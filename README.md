@@ -1,6 +1,6 @@
 # stockapp
-this is a personal project where i am replicating a stock watching/ trading application 
-front end - react.js
-backend - node.js
-databae - postgreSQL
+this is a personal project where i am replicating a stock watching/ trading application <br>
+front end - react.js<br>
+backend - node.js<br>
+database - postgreSQL
 
