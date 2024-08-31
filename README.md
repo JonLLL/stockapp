@@ -3,5 +3,12 @@ this is a personal project where i am replicating a stock watching/ trading appl
 front end - react.js<br>
 backend - Python, node.js, express.js <br>
 database - postgreSQL <br>
-features- i intend to implement a machine learnign model that is will take a stocks patterna and match it with a chart pattern that most similarly represents it
+utilizing aplaca api for real time market data <br>
+##mvp
+users can add stocks into a watch list<br>
+users can search up the stock<br>
+users must be able to graphically view stock and candle sticks <br>
+option for users to view in different time ranges (hourly, monthly, yearly, etc)
+##features
+i intend to implement a machine learnign model that is will take a stocks patterna and match it with a chart pattern that most similarly represents it
 
