@@ -2,7 +2,7 @@
 This is a personal project where i am replicating a stock watching/ trading application <br>
 Front end - react.js<br>
 Backend - Python, node.js, express.js <br>
-Database - postgreSQL <br>
+Database - SQLite <br>
 Utilizing aplaca api for real time market data <br>
 ## mvp
 users must be able to log in and log out <br>
