@@ -17,5 +17,5 @@ A machine learnign model that is will take a stocks pattern and match it with a 
 ## credit
 Part Time Larry stock trading app tutorial for insperation and design
 ### updates
-8/31 - research and flush out applicaiton purpose 
+8/31 - research and flush out applicaiton purpose <br>
 9/1 - database design and setup
