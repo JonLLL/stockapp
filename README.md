@@ -1,7 +1,7 @@
 # stockapp
 This is a personal project where i am replicating a stock watching/ trading application <br>
 Front end - react.js<br>
-Backend - Python, node.js, express.js <br>
+Backend - Python, Fastapi <br>
 Database - SQLite <br>
 Utilizing aplaca api for real time market data including crypto <br>
 ## mvp
