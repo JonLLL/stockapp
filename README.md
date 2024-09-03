@@ -3,7 +3,7 @@ This is a personal project where i am replicating a stock watching/ trading appl
 Front end - react.js<br>
 Backend - Python, Fastapi <br>
 Database - SQLite <br>
-Utilizing aplaca api for real time market data including crypto <br>
+Utilizing aplaca api for real time market data including crypto, polygon.io api for minute data <br>
 ## mvp
 users must be able to log in and log out <br>
 users can add stocks into a watch list<br>
