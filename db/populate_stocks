@@ -1,0 +1,32 @@
+import sqlite3
+import alpaca_trade_api as tradeapi
+import config 
+
+#use scheduling to consistently update data of new stocks
+
+def detect_asset_type(symbol):
+    return 'CRYPTO' if '/' in symbol else 'STOCK'
+
+connection = sqlite3.connect(config.DB_FILE)
+cursor = connection.cursor()
+api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, config.API_URL)
+assets = api.list_assets()
+
+cursor.execute("""
+    SELECT symbol FROM asset
+               """)
+
+rows = cursor.fetchall()
+symbols = [row[0] for row in rows]
+
+for asset in assets:
+    try:
+        if asset.status == 'active' and asset.tradable and asset.symbol not in symbols:
+            asset_type = detect_asset_type(asset.symbol)
+            print(f"Added a new asset {asset.symbol} {asset.name} {asset_type}")
+            cursor.execute("INSERT INTO asset (symbol, name, type) VALUES (?,?,?)", (asset.symbol, asset.name, asset_type))
+    except Exception as e:
+        print(asset.symbol)
+        print(e)
+
+connection.commit()
