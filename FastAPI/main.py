@@ -1,5 +1,4 @@
-import sqlite3, models, services, schema
-from db import config
+import models, services, schema
 from fastapi import FastAPI, HTTPException, Depends
 from typing import Annotated, List
 from sqlalchemy.orm import Session
@@ -24,5 +23,16 @@ db_dependency = Annotated[Session,Depends(services.get_db)]
 async def get_assets(db : db_dependency, skip: int = 0, limit: int = 100):
     assets = db.query(models.Asset).offset(skip).limit(limit).all()
     return assets
+
+# get stockprice by symbol 
+@app.get("/stocks/{stock_id}", response_model=List[schema.stockPriceModel])
+async def get_stockPrices(stock_id: int, db : db_dependency):
+    try:
+        stock_prices = db.query(models.Stock_price).filter(models.Stock_price.stock_id == stock_id)
+    except:
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return stock_prices
+
+
 
 # to run uvicorn main:app --reload
