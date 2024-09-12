@@ -1,7 +1,7 @@
 import sqlite3, models, services, schema
 from db import config
 from fastapi import FastAPI, HTTPException, Depends
-from typing import Annotated
+from typing import Annotated, List
 from sqlalchemy.orm import Session
 from database import sessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,18 +20,9 @@ db_dependency = Annotated[Session,Depends(services.get_db)]
 # models.Base.metadata.create_all(bind = engine)
 
 # get all stocks in database
-@app.get("/stocks", response_model=schema.assetModel)
-async def get_stocks():
-    connection = sqlite3.connect(config.DB_FILE)
-    connection.row_factory = sqlite3.Row
-    cursor = connection.cursor()
-
-    cursor.execute("""
-        SELECT id, symbol, type FROM asset WHERE type LIKE 'STOCK'
-    """)
-
-    rows = cursor.fetchall()
-
-    return{"title":"dashboard", "stocks" : rows}
+@app.get("/stocks", response_model=List[schema.assetModel])
+async def get_assets(db : db_dependency, skip: int = 0, limit: int = 100):
+    assets = db.query(models.Asset).offset(skip).limit(limit).all()
+    return assets
 
 # to run uvicorn main:app --reload
