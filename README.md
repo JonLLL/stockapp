@@ -15,7 +15,9 @@ watch list data/ user data is retained in database <br>
 A model that determines weather market data determines if market is bullish or bearish <br>
 A machine learning model that will take a stock's pattern and match it with a chart pattern that most similarly represents it <br>
 ## credit
-Part Time Larry stock trading app tutorial for insperation and design
+Part Time Larry stock trading app tutorial for inspiration and design<br>
+Eric roby React + FastAPI (full-stack guide) for stack implmentation guide<br>
+Rithmic React & FastAPI for stack implementation guide<br>
 ### updates
 8/31 - research and flush out applicaiton purpose <br>
 9/1 - database design and setup <br>
