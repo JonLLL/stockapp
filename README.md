@@ -1,6 +1,6 @@
 # stockapp
 This is a personal project where i am replicating a stock watching/ trading application <br>
-Front end - react.js<br>
+Front end - React.js<br>
 Backend - Python, Fastapi <br>
 Database - SQLite <br>
 Utilizing aplaca api for real time market data including crypto, polygon.io api for minute data <br>
@@ -18,4 +18,5 @@ A machine learnign model that is will take a stocks pattern and match it with a 
 Part Time Larry stock trading app tutorial for insperation and design
 ### updates
 8/31 - research and flush out applicaiton purpose <br>
-9/1 - database design and setup
+9/1 - database design and setup <br>
+9/11 - reorganize files and start implementation of fast api<br>
