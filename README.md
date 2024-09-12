@@ -13,7 +13,7 @@ option for users to view in different time ranges (hourly, monthly, yearly, etc)
 watch list data/ user data is retained in database <br>
 ## features
 A model that determines weather market data determines if market is bullish or bearish <br>
-A machine learnign model that is will take a stocks pattern and match it with a chart pattern that most similarly represents it <br>
+A machine learning model that will take a stock's pattern and match it with a chart pattern that most similarly represents it <br>
 ## credit
 Part Time Larry stock trading app tutorial for insperation and design
 ### updates
