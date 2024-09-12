@@ -19,4 +19,4 @@ Part Time Larry stock trading app tutorial for insperation and design
 ### updates
 8/31 - research and flush out applicaiton purpose <br>
 9/1 - database design and setup <br>
-9/11 - reorganize files and start implementation of fast api<br>
+9/11 - reorganize files and start implementation of fast api, react setup<br>
