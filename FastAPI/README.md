@@ -1,5 +1,5 @@
 ## Starting backend
-To run backend "uvicorn main:app --reload"<br>
+To run backend type "uvicorn main:app --reload" in terminal <br>
 api runs on http://127.0.0.1:8000 (http://localhost:8000)
 
 ## Documentation 
