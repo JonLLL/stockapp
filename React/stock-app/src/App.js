@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import AssetList from './components/assetList';
+import StockPrice from './components/stockPrice';
 
 const App = () => {
   return(
@@ -13,13 +14,14 @@ const App = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/stocks">Asset List</Link>
+              <Link to="/assets">Asset List</Link>
             </li>
           </ul>
         </nav>
         <Routes>
           <Route path="/" element={<div><h2>Welcome to my stock app project</h2></div>} />
-          <Route path="/stocks" element={<AssetList />} />
+          <Route path="/assets" element={<AssetList />} />
+          <Route path="/assets/:assetId" element={<StockPrice />} />
         </Routes>
       </div>
     </Router>

@@ -19,7 +19,7 @@ db_dependency = Annotated[Session,Depends(services.get_db)]
 # models.Base.metadata.create_all(bind = engine)
 
 # get all stocks in database
-@app.get("/assets/", response_model=List[schema.assetModel])
+@app.get("/assets", response_model=List[schema.assetModel])
 async def get_assets(db : db_dependency):#, skip: int = 0, limit: int = 100):
     assets = db.query(models.Asset).all()#.offset(skip).limit(limit).all()
     return assets
