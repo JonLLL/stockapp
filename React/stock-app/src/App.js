@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import AssetList from './components/assetList';
 import StockPrice from './components/stockPrice';
+import SearchDropdown from './components/search';
 
 const App = () => {
   return(
@@ -19,7 +20,15 @@ const App = () => {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<div><h2>Welcome to my stock app project</h2></div>} />
+        <Route
+            path="/"
+            element={
+              <div>
+                <h2>Welcome to my stock app project</h2>
+                <SearchDropdown />  
+              </div>
+            }
+          />
           <Route path="/assets" element={<AssetList />} />
           <Route path="/assets/:assetId" element={<StockPrice />} />
         </Routes>

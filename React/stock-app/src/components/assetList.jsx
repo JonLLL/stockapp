@@ -10,7 +10,6 @@ function AssetList() {
     const fetchAssets = async () => {
       try {
         const response = await api.get('/assets');
-        console.log('Assets response:', response.data);
         setAssets(response.data);
       } catch (error) {
         console.error('Error fetching assets:', error);

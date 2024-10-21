@@ -4,6 +4,7 @@ from typing import Annotated, List
 from sqlalchemy.orm import Session
 from database import sessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
+import logging
 
 app = FastAPI()
 
@@ -33,7 +34,13 @@ async def get_stockPrices(stock_id: int, db : db_dependency):
         raise HTTPException(status_code=404, detail="Asset not found")
     return stock_prices
 
-# get "/assets/{symbol}" returns list of assets matching symbol
+#returns list of assets matching symbol
+# @app.get("/search/{symbol}", response_model=List[schema.assetModel])
+# async def get_assets(symbol: str, db: db_dependency): 
+#     assets = db.query(models.Asset).filter(models.Asset.symbol.ilike(f'%{symbol}%')).all()
+#     if not assets:
+#         return []
+#     return assets
 
 
 # to run uvicorn main:app --reload
