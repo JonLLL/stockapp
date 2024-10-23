@@ -5,13 +5,12 @@ import api from '../api';
 function StockPrice(){
     const { assetId } = useParams();
     const[prices, setPrices] = useState([]);
-    console.log(`Fetching prices for stockId: ${assetId}`);
+    
     useEffect(() => {
         const fetchPrices = async () => {
         try {
             const response = await api.get(`/assets/${assetId}`);
-            const sortedPrices = response.data.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
-            setPrices(sortedPrices);
+            setPrices(response);
         } catch (error) {
             console.error('Error fetching assets price:', error);
         }
@@ -22,6 +21,9 @@ function StockPrice(){
     return (
         <div>
           <h2>Price History</h2>
+          {prices.length === 0 ? (
+            <p>Prices Currently not available</p>
+          ):(
           <ul>
             {prices.map((price, index) => (
               <li key={index}>
@@ -29,6 +31,7 @@ function StockPrice(){
               </li>
             ))}
           </ul>
+          )}
         </div>
       );
 }

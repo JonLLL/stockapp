@@ -25,11 +25,11 @@ async def get_assets(db : db_dependency):#, skip: int = 0, limit: int = 100):
     assets = db.query(models.Asset).all()#.offset(skip).limit(limit).all()
     return assets
 
-# get stockprice by id, hourly data
+# get stockprice by id, daily data sorted by date 
 @app.get("/assets/{stock_id}", response_model=List[schema.stockPriceModel])
 async def get_stockPrices(stock_id: int, db : db_dependency):
     try:
-        stock_prices = db.query(models.Stock_price).filter(models.Stock_price.stock_id == stock_id)
+        stock_prices = db.query(models.Stock_price).filter(models.Stock_price.stock_id == stock_id).order_by(models.Stock_price.time_stamp.desc())
     except:
         raise HTTPException(status_code=404, detail="Asset not found")
     return stock_prices
@@ -41,6 +41,16 @@ async def get_stockPrices(stock_id: int, db : db_dependency):
 #     if not assets:
 #         return []
 #     return assets
+
+# create a new user
+# @app.post("/login")
+# async def creat_user(username: str, password: str, db: db_dependency):
+#     try:
+#         db.add
+#     except:
+#         raise HTTPException(status_code=200, detail="username already exists")
+
+
 
 
 # to run uvicorn main:app --reload
