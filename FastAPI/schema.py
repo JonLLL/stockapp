@@ -1,9 +1,11 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import List
 
 class assetBase(BaseModel):
     symbol : str
     name : str
+    exchange : str
     type : str
 
 class assetModel(assetBase):
@@ -26,3 +28,8 @@ class stockPriceModel(stockPriceBase):
 
     class Config:
         from_attributes = True
+
+class StockPriceResponse(BaseModel):
+    symbol: str
+    exchange: str
+    prices: List[stockPriceModel]

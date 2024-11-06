@@ -8,6 +8,7 @@ class Asset(Base):
     id = Column(Integer, primary_key=True, index =True)
     symbol = Column(String, unique=True, index = True)
     name = Column(String)
+    exchange = Column(String)
     type = Column(String)
 
     prices = relationship("Stock_price", back_populates="asset")

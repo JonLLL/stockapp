@@ -22,17 +22,24 @@ db_dependency = Annotated[Session,Depends(services.get_db)]
 # get all stocks in database
 @app.get("/assets", response_model=List[schema.assetModel])
 async def get_assets(db : db_dependency):#, skip: int = 0, limit: int = 100):
-    assets = db.query(models.Asset).all()#.offset(skip).limit(limit).all()
+    assets = db.query(models.Asset).order_by(models.Asset.symbol.asc()).all()#.offset(skip).limit(limit).all()
     return assets
 
 # get stockprice by id, daily data sorted by date 
-@app.get("/assets/{stock_id}", response_model=List[schema.stockPriceModel])
+@app.get("/assets/{stock_id}", response_model=schema.StockPriceResponse)
 async def get_stockPrices(stock_id: int, db : db_dependency):
     try:
+        stock = db.query(models.Asset).filter(models.Asset.id == stock_id).first()
+        if not stock:
+            raise HTTPException(status_code=404, detail="Asset not found")
         stock_prices = db.query(models.Stock_price).filter(models.Stock_price.stock_id == stock_id).order_by(models.Stock_price.time_stamp.desc())
     except:
         raise HTTPException(status_code=404, detail="Asset not found")
-    return stock_prices
+    return schema.StockPriceResponse(
+            symbol=stock.symbol,
+            exchange=stock.exchange,
+            prices=stock_prices
+        )
 
 #returns list of assets matching symbol
 # @app.get("/search/{symbol}", response_model=List[schema.assetModel])
