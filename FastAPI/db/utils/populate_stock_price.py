@@ -3,6 +3,11 @@ from alpaca.data.historical.stock import StockHistoricalDataClient
 from alpaca.data.requests import StockBarsRequest
 from alpaca.data.timeframe import TimeFrame
 from datetime import datetime
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'db'))
+
 import config 
 
 connection = sqlite3.connect(config.DB_FILE)
@@ -30,7 +35,7 @@ for i in range(0, len(symbols), chunk_size):
     params = StockBarsRequest(
         symbol_or_symbols= symbol_chunk,
         start=datetime(2024, 1, 1),
-        end=datetime(2024, 9, 2),
+        end=datetime(2024, 11, 5),
         timeframe=TimeFrame.Day
     )
     barsets = client.get_stock_bars(params).dict()
@@ -41,7 +46,7 @@ for i in range(0, len(symbols), chunk_size):
             cursor.execute("""
                 INSERT INTO stock_price (stock_id, time_stamp, open, high, low, close, volume)
                 VALUES (?,?,?,?,?,?,?)
-            """, (stock_id, bar['timestamp'], bar['open'], bar['high'], bar['close'], bar['volume']))
+            """, (stock_id, bar['timestamp'], bar['open'], bar['high'], bar['low'],bar['close'], bar['volume']))
 
 
 connection.commit()

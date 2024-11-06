@@ -1,5 +1,9 @@
 import sqlite3
 import alpaca_trade_api as tradeapi
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'db'))
 import config 
 
 #use scheduling to consistently update data of new stocks
@@ -24,7 +28,7 @@ for asset in assets:
         if asset.status == 'active' and asset.tradable and asset.symbol not in symbols:
             asset_type = detect_asset_type(asset.symbol)
             print(f"Added a new asset {asset.symbol} {asset.name} {asset_type}")
-            cursor.execute("INSERT INTO asset (symbol, name, type) VALUES (?,?,?)", (asset.symbol, asset.name, asset_type))
+            cursor.execute("INSERT INTO asset (symbol, name, exchange, type) VALUES (?,?,?,?)", (asset.symbol, asset.name, asset.exchange, asset_type))
     except Exception as e:
         print(asset.symbol)
         print(e)

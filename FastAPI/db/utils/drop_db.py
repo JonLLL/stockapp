@@ -1,4 +1,9 @@
-import sqlite3, config as config
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'db'))
+
+import sqlite3, config
 
 connection = sqlite3.connect(config.DB_FILE)
 
