@@ -25,4 +25,8 @@ Rithmic React & FastAPI for stack implementation guide<br>
 9/11 - reorganize files and start implementation of fast api, react setup<br>
 9/17 - implemented a basic ui for a home page as well as stock list page, also connectd api using axios<br>
 10/20 - implemented search component and asset price component<br>
+11/5 - refactor database schema and query response. implement tradview widget for detailed charts. <br>
+
+### bug
+11/5 - react strictmode cleanup for tradeview widget: null type error<br>
 
