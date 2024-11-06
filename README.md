@@ -27,6 +27,6 @@ Rithmic React & FastAPI for stack implementation guide<br>
 10/20 - implemented search component and asset price component<br>
 11/5 - refactor database schema and query response. implement tradview widget for detailed charts. <br>
 
-### bug
+### bugs
 11/5 - react strictmode cleanup for tradeview widget: null type error<br>
 
