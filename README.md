@@ -7,13 +7,14 @@ Utilizing aplaca api for real time market data including crypto, polygon.io api 
 ## MVP
 users must be able to log in and log out <br>
 users can add stocks into a watch list<br>
-users can search up the stock/crypto assets<br>
-users must be able to graphically view stock/crypto and candle sticks <br>
+users can search up the stock/crypto assets✔️<br>
+users must be able to graphically view stock/crypto and candle sticks ✔️<br>
 option for users to view in different time ranges (hourly, monthly, yearly, etc)<br>
 watch list data/ user data is retained in database <br>
+user can apply trading algorithms to stocks they choose <br>
 database must be automatically updated regularly to have up to date date (task scheduling) <br>
 ## Features
-A model that determines weather market data determines if market is bullish or bearish <br>
+A model that determines whether market data is bullish or bearish <br>
 A machine learning model that will take a stock's pattern and match it with a chart pattern that most similarly represents it <br>
 ## Credit
 Part Time Larry stock trading app tutorial for inspiration and design<br>
