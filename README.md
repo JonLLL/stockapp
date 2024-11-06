@@ -1,4 +1,4 @@
-# stockapp
+# Fullstack stockapp
 This is a personal project where i am replicating a stock watching/ trading application <br>
 Front end - React.js<br>
 Backend - Python, Fastapi <br>
