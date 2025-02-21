@@ -29,23 +29,35 @@ class Stock_price(Base):
 
     asset = relationship("Asset", back_populates="prices")
 
-# class User(Base):
-#     __tablename__ = 'user'
+class User(Base):
+    __tablename__ = 'user'
 
-#     id = Column(Integer, primary_key= True, index=True)
-#     username = Column(String, nullable=False)
-#     password = Column(String, nullable=False)
-#     watchlist_id = Column(Integer, ForeignKey('watchlist.id'), nullable=False)
+    id = Column(Integer, primary_key= True, index=True)
+    username = Column(String, unique=True, index=True)
+    password = Column(String, nullable=False)
 
-#     watchlist = relationship("Watchlist", back_populates="user", uselist=False)
+    watchlist = relationship("Watchlist", back_populates="user")
 
-# class Watchlist(Base):
-#     __tablename__ = 'watchlist'
-#     id = Column(Integer, primary_key= True, index=True)
-#     stock_id = Column(Integer, ForeignKey('asset.id'), nullable=False)
+class Watchlist(Base):
+    __tablename__ = 'watchlist'
 
-#     asset = relationship("Asset", secondary=watchlist_asset_association, back_populates="watchlists")
-#     user = relationship("User", back_populates="watchlist") 
+    id = Column(Integer, primary_key= True, index=True)
+    name = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable = False)
+
+    user = relationship("User", back_populates="watchlist") 
+    items = relationship("Watchlist_Item", back_populates="watchlist", cascade="all, delete")
+
+class Watchlist_Item(Base):
+    __tablename__ = "watchlist_Item"
+
+    id = Column(Integer, primary_key = True, index = True)
+    watchlist_id = Column(Integer, ForeignKey('watchlist.id'), nullable = False)
+    asset_id = Column(Integer, ForeignKey('asset.id'), nullable = False)
+
+    watchlist = relationship("Watchlist", back_populates = "items")
+    asset = relationship("Asset")
+
 
 
 

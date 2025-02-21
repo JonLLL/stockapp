@@ -31,31 +31,33 @@ cursor.execute("""
         )
 """)
 
-# cursor.execute("""
-#     CREATE TABLE IF NOT EXISTS user (
-#         id INTEGER PRIMARY KEY,
-#         username TEXT NOT NULL UNIQUE,
-#         password TEXT NOT NULL
-#         )
-# """)
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS user (
+        id INTEGER PRIMARY KEY,
+        username TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL
+        )
+""")
 
+cursor.execute("""
+    CREATE TABLE watchlist (
+        id INTEGER PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        name TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+        )  
+""")
 
-# CREATE TABLE watchlists (
-#     watchlist_id INTEGER PRIMARY KEY,
-#     user_id INTEGER NOT NULL,
-#     name VARCHAR(100) NOT NULL,
-#     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-#     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-# );
+cursor.execute("""
+    CREATE TABLE watchlist_items (
+        id INTEGERL PRIMARY KEY,
+        watchlist_id INTEGER NOT NULL,
+        asset_id INTEGER NOT NULL,
+        FOREIGN KEY (watchlist_id) REFERENCES watchlists(watchlist_id) ON DELETE CASCADE,
+        FOREIGN KEY (asset_id) REFERENCES assets(asset_id) ON DELETE CASCADE
+        )         
+""")
 
-# CREATE TABLE watchlist_items (
-#     watchlist_item_id INTEGERL PRIMARY KEY,
-#     watchlist_id INTEGER NOT NULL,
-#     asset_id INTEGER NOT NULL,
-#     added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-#     FOREIGN KEY (watchlist_id) REFERENCES watchlists(watchlist_id) ON DELETE CASCADE,
-#     FOREIGN KEY (asset_id) REFERENCES assets(asset_id) ON DELETE CASCADE
-# );
 
 
 connection.commit()

@@ -33,3 +33,38 @@ class StockPriceResponse(BaseModel):
     symbol: str
     exchange: str
     prices: List[stockPriceModel]
+
+
+class userBase(BaseModel):
+    username: str
+    password: str
+
+class usermodel(userBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+class watchlistBase(BaseModel):
+    name: str
+    user_id: int
+
+
+class watchlistmodel(watchlistBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+class watchlistItemBase(BaseModel):
+    watchlist_id : int
+    asset_id:int
+
+class watchlistItemmodel(watchlistItemBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+class watchlistCreate(BaseModel):
+    name: str
