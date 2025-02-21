@@ -41,6 +41,35 @@ async def get_stockPrices(stock_id: int, db : db_dependency):
             prices=stock_prices
         )
 
+@app.post("/sign-up")
+async def create_user(user: schema.usermodel, db:db_dependency):
+    existing_user = db.query(models.User).filter(models.User.username == user.username).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username already exists")
+    
+    new_user = models.User(username = user.username, password = user.password)
+
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return {"id": new_user.id, "username": new_user.username}
+
+@app.post("/user={user_id}/watchlist", response_model=schema.watchlistCreate)
+async def create_watchlist(user_id :int , watchlist: schema.watchlistCreate, db:db_dependency):
+    try:
+        user = db.query(models.User).filter(models.User.id == user_id).first()
+    except:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    new_watchlist = models.Watchlist(name=watchlist.name, user_id=user.id)
+    db.add(new_watchlist)
+    db.commit()
+    db.refresh(new_watchlist)
+
+    return new_watchlist
+    
+
 #returns list of assets matching symbol
 # @app.get("/search/{symbol}", response_model=List[schema.assetModel])
 # async def get_assets(symbol: str, db: db_dependency): 
