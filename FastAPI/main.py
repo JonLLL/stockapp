@@ -13,8 +13,14 @@ origins = [
     'http://localhost:3000'
 ]
 
-app.add_middleware(CORSMiddleware, allow_origins = origins)
-
+# app.add_middleware(CORSMiddleware, allow_origins = origins)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (change for security purposes)
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 db_dependency = Annotated[Session,Depends(services.get_db)]
 
 # models.Base.metadata.create_all(bind = engine)
@@ -42,7 +48,7 @@ async def get_stockPrices(stock_id: int, db : db_dependency):
         )
 
 @app.post("/sign-up")
-async def create_user(user: schema.usermodel, db:db_dependency):
+async def create_user(user: schema.userModel, db:db_dependency):
     existing_user = db.query(models.User).filter(models.User.username == user.username).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Username already exists")
@@ -68,7 +74,16 @@ async def create_watchlist(user_id :int , watchlist: schema.watchlistCreate, db:
     db.refresh(new_watchlist)
 
     return new_watchlist
+
+@app.post("/login")
+async def login(request :schema.LoginRequest, db:db_dependency):
+    username = request.username
+    password = request.password
+    user = db.query(models.User).filter(models.User.username == username, models.User.password== password).first()
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid username or password")
     
+    return {"message": "Login successfull", "user": user}
 
 #returns list of assets matching symbol
 # @app.get("/search/{symbol}", response_model=List[schema.assetModel])

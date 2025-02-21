@@ -39,7 +39,7 @@ class userBase(BaseModel):
     username: str
     password: str
 
-class usermodel(userBase):
+class userModel(userBase):
     id: int
 
     class Config:
@@ -68,3 +68,7 @@ class watchlistItemmodel(watchlistItemBase):
 
 class watchlistCreate(BaseModel):
     name: str
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
