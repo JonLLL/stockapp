@@ -46,7 +46,7 @@ async def get_stockPrices(stock_id: int, db : db_dependency):
             exchange=stock.exchange,
             prices=stock_prices
         )
-
+# create user upon sign up
 @app.post("/sign-up")
 async def create_user(user: schema.userModel, db:db_dependency):
     existing_user = db.query(models.User).filter(models.User.username == user.username).first()
@@ -61,7 +61,8 @@ async def create_user(user: schema.userModel, db:db_dependency):
 
     return {"id": new_user.id, "username": new_user.username}
 
-@app.post("/user={user_id}/watchlist", response_model=schema.watchlistCreate)
+# create watchlist for a user
+@app.post("/user/{user_id}/watchlist", response_model=schema.watchlistCreate)
 async def create_watchlist(user_id :int , watchlist: schema.watchlistCreate, db:db_dependency):
     try:
         user = db.query(models.User).filter(models.User.id == user_id).first()
@@ -75,6 +76,7 @@ async def create_watchlist(user_id :int , watchlist: schema.watchlistCreate, db:
 
     return new_watchlist
 
+# login the user (verfies user and correct password)
 @app.post("/login")
 async def login(request :schema.LoginRequest, db:db_dependency):
     username = request.username
@@ -84,6 +86,78 @@ async def login(request :schema.LoginRequest, db:db_dependency):
         raise HTTPException(status_code=401, detail="Invalid username or password")
     
     return {"message": "Login successfull", "user": user}
+
+# get the users info (i.e their watchlist as of now)
+@app.get("/user/{user_id}", response_model = schema.userInfo)
+async def get_userInfo(user_id:int, db:db_dependency):
+    try:
+        user = db.query(models.User).filter(models.User.id == user_id).first()
+    except:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    #list of user watchlists
+    watchlists = db.query(models.Watchlist).filter(models.Watchlist.user_id == user_id).all()
+
+    # for list of assets
+    watchlists_data = []
+
+    for w in watchlists:
+        items = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.watchlist_id == w.id).all()
+        asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, watchlist_id=w.id) for item in items]
+        watchlists_data.append(schema.watchlistResponse(name=w.name, user_id=user_id, assets=asset_items))
+    
+    return schema.userInfo(username= user.username, watchlists=watchlists_data)
+
+# put an asset into a users watchlist
+@app.put("/user/{user_id}/{watchlist_id}", response_model=schema.watchlistResponse)
+async def put_asset(user_id: int, watchlist_id :int, asset_id:int, db:db_dependency):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+  
+    watchlist = db.query(models.Watchlist).filter(models.Watchlist.user_id == user_id, models.Watchlist.id == watchlist_id).first()
+    if not watchlist:
+        raise HTTPException(status_code=404, detail="Watchlist for this user not found")
+    
+    existing_asset = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.asset_id == asset_id, models.Watchlist_Item.watchlist_id == watchlist_id).first()
+    if existing_asset:
+        raise HTTPException(status_code=409, detail="Already in the watchlist")
+    
+    new_watchlistItem = models.Watchlist_Item(watchlist_id = watchlist_id, asset_id = asset_id)
+    db.add(new_watchlistItem)
+    db.commit()
+    db.refresh(new_watchlistItem)
+
+    assets = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.watchlist_id == watchlist_id).all()
+    a_items =  [schema.watchlistItemBase(asset_id= item.asset_id, watchlist_id=watchlist_id) for item in assets]
+
+    return schema.watchlistResponse(name = watchlist.name, user_id=user_id, assets=a_items)
+
+# delete an item from a users watchlist 
+@app.delete("/user/{user_id}/{watchlist_id}/{watchlistItem_id}", response_model=schema.watchlistResponse)
+async def delete_asset(user_id:int, watchlist_id:int, item_id:int, db:db_dependency):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+  
+    watchlist = db.query(models.Watchlist).filter(models.Watchlist.user_id == user_id, models.Watchlist.id == watchlist_id).first()
+    if not watchlist:
+        raise HTTPException(status_code=404, detail="Watchlist for this user not found")
+    
+    item = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.id == item_id, models.Watchlist_Item.watchlist_id == watchlist_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="This item does not exist")
+    
+    db.delete(item)
+    db.commit()
+
+    assets = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.watchlist_id == watchlist_id).all()
+    a_items =  [schema.watchlistItemBase(asset_id= item.asset_id, watchlist_id=watchlist_id) for item in assets]
+
+    return schema.watchlistResponse(name=watchlist.name, user_id=user_id, assets= a_items)
+
+        
 
 #returns list of assets matching symbol
 # @app.get("/search/{symbol}", response_model=List[schema.assetModel])

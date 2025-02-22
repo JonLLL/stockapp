@@ -40,21 +40,21 @@ cursor.execute("""
 """)
 
 cursor.execute("""
-    CREATE TABLE watchlist (
+    CREATE TABLE IF NOT EXISTS watchlist (
         id INTEGER PRIMARY KEY,
         user_id INTEGER NOT NULL,
         name TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+        FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
         )  
 """)
 
 cursor.execute("""
-    CREATE TABLE watchlist_items (
-        id INTEGERL PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS watchlist_items (
+        id INTEGER PRIMARY KEY,
         watchlist_id INTEGER NOT NULL,
         asset_id INTEGER NOT NULL,
-        FOREIGN KEY (watchlist_id) REFERENCES watchlists(watchlist_id) ON DELETE CASCADE,
-        FOREIGN KEY (asset_id) REFERENCES assets(asset_id) ON DELETE CASCADE
+        FOREIGN KEY (watchlist_id) REFERENCES watchlist(watchlist_id) ON DELETE CASCADE,
+        FOREIGN KEY (asset_id) REFERENCES asset(asset_id) ON DELETE CASCADE
         )         
 """)
 

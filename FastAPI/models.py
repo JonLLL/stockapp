@@ -49,7 +49,7 @@ class Watchlist(Base):
     items = relationship("Watchlist_Item", back_populates="watchlist", cascade="all, delete")
 
 class Watchlist_Item(Base):
-    __tablename__ = "watchlist_Item"
+    __tablename__ = "watchlist_items"
 
     id = Column(Integer, primary_key = True, index = True)
     watchlist_id = Column(Integer, ForeignKey('watchlist.id'), nullable = False)

@@ -60,7 +60,7 @@ class watchlistItemBase(BaseModel):
     watchlist_id : int
     asset_id:int
 
-class watchlistItemmodel(watchlistItemBase):
+class watchlistItemModel(watchlistItemBase):
     id: int
 
     class Config:
@@ -72,3 +72,12 @@ class watchlistCreate(BaseModel):
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+class watchlistResponse(BaseModel):
+    name: str
+    user_id: int
+    assets: list[watchlistItemBase]
+
+class userInfo(BaseModel):
+    username : str
+    watchlists : list[watchlistResponse]
