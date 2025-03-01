@@ -52,8 +52,11 @@ async def create_user(user: schema.userModel, db:db_dependency):
     existing_user = db.query(models.User).filter(models.User.username == user.username).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Username already exists")
+    exisiting_email = db.query(models.User).filter(models.User.email == user.email).first()
+    if exisiting_email:
+        raise HTTPException(status_code=400, detail="Email already exists")
     
-    new_user = models.User(username = user.username, password = user.password)
+    new_user = models.User(username = user.username, password = user.password, email = user.email)
 
     db.add(new_user)
     db.commit()
@@ -157,7 +160,33 @@ async def delete_asset(user_id:int, watchlist_id:int, item_id:int, db:db_depende
 
     return schema.watchlistResponse(name=watchlist.name, user_id=user_id, assets= a_items)
 
-        
+
+@app.delete("/user/{user_id}/{watchlist_id}", response_model=schema.userInfo)
+async def delete_watchlist(user_id: int, watchlist_id:int, db:db_dependency):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+  
+    watchlist = db.query(models.Watchlist).filter(models.Watchlist.user_id == user_id, models.Watchlist.id == watchlist_id).first()
+    if not watchlist:
+        raise HTTPException(status_code=404, detail="Watchlist for this user not found")
+    
+    db.delete(watchlist)
+    db.commit()
+
+    #list of user watchlists
+    watchlists = db.query(models.Watchlist).filter(models.Watchlist.user_id == user_id).all()
+
+    # for list of assets
+    watchlists_data = []
+
+    for w in watchlists:
+        items = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.watchlist_id == w.id).all()
+        asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, watchlist_id=w.id) for item in items]
+        watchlists_data.append(schema.watchlistResponse(name=w.name, user_id=user_id, assets=asset_items))
+    
+    return schema.userInfo(username=user.username, watchlists=watchlists_data)
+
 
 #returns list of assets matching symbol
 # @app.get("/search/{symbol}", response_model=List[schema.assetModel])

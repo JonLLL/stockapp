@@ -35,7 +35,8 @@ cursor.execute("""
     CREATE TABLE IF NOT EXISTS user (
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE
         )
 """)
 
@@ -44,7 +45,7 @@ cursor.execute("""
         id INTEGER PRIMARY KEY,
         user_id INTEGER NOT NULL,
         name TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
+        FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
         )  
 """)
 
@@ -53,8 +54,8 @@ cursor.execute("""
         id INTEGER PRIMARY KEY,
         watchlist_id INTEGER NOT NULL,
         asset_id INTEGER NOT NULL,
-        FOREIGN KEY (watchlist_id) REFERENCES watchlist(watchlist_id) ON DELETE CASCADE,
-        FOREIGN KEY (asset_id) REFERENCES asset(asset_id) ON DELETE CASCADE
+        FOREIGN KEY (watchlist_id) REFERENCES watchlist(id) ON DELETE CASCADE,
+        FOREIGN KEY (asset_id) REFERENCES asset(id) ON DELETE CASCADE
         )         
 """)
 

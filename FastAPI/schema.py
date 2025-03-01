@@ -38,6 +38,7 @@ class StockPriceResponse(BaseModel):
 class userBase(BaseModel):
     username: str
     password: str
+    email: str
 
 class userModel(userBase):
     id: int
