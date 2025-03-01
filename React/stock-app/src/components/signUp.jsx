@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import api from "../api";
 
 function SignUp(){
@@ -56,6 +57,7 @@ function SignUp(){
             />
             <button type="submit">Sign-up</button>
             {message && <p>{message}</p>}
+            <h6>Already have an account?<Link to="/login">Log in</Link></h6>
             </form>
         </div>
     )   

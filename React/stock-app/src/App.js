@@ -22,7 +22,7 @@ const App = () => {
               <Link to="/assets">Asset List</Link>
             </li>
               <Link to="/login">
-              <button>Sign In</button>
+              <button>Log In</button>
             </Link>
           </ul>
         </nav>
