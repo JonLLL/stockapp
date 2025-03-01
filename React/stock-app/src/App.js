@@ -4,6 +4,7 @@ import AssetList from './components/assetList';
 import StockPrice from './components/stockPrice';
 import SearchDropdown from './components/search';
 import Login from './components/login';
+import SignUp from './components/signUp';
 
 const App = () => {
   return(
@@ -50,6 +51,9 @@ const App = () => {
 
           {/* Login Route */}
           <Route path="/login" element={<Login />} />
+
+          {/* SignUP Route */}
+          <Route path="/sign-up" element={<SignUp />} />
         </Routes>
       </div>
     </Router>

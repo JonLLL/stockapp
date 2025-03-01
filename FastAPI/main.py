@@ -48,15 +48,16 @@ async def get_stockPrices(stock_id: int, db : db_dependency):
         )
 # create user upon sign up
 @app.post("/sign-up")
-async def create_user(user: schema.userModel, db:db_dependency):
-    existing_user = db.query(models.User).filter(models.User.username == user.username).first()
+async def create_user(request :schema.SignUpRequest, db:db_dependency):
+
+    existing_user = db.query(models.User).filter(models.User.username == request.username).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Username already exists")
-    exisiting_email = db.query(models.User).filter(models.User.email == user.email).first()
+    exisiting_email = db.query(models.User).filter(models.User.email == request.email).first()
     if exisiting_email:
         raise HTTPException(status_code=400, detail="Email already exists")
     
-    new_user = models.User(username = user.username, password = user.password, email = user.email)
+    new_user = models.User(username = request.username, password = request.password, email = request.email)
 
     db.add(new_user)
     db.commit()

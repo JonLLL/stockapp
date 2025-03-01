@@ -82,3 +82,8 @@ class watchlistResponse(BaseModel):
 class userInfo(BaseModel):
     username : str
     watchlists : list[watchlistResponse]
+
+class SignUpRequest(BaseModel):
+    username: str
+    password: str
+    email:str
