@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import api from "../api";
 
 function Login(){
     const[userData, setUserData] = useState({username:"",password:""})
     const[message, setMessage] = useState("")
+    const navigate = useNavigate();
     
     const handleChange = (e) => {
         setUserData({...userData, [e.target.name]:e.target.value})
@@ -18,9 +19,12 @@ function Login(){
                 password: userData.password
             });
 
+            localStorage.setItem("user", JSON.stringify(response.data));
 
             setMessage("Login successful!")
             console.log("Login Successful", response.data)
+
+            navigate("/dashboard");
 
         }
         catch (error){

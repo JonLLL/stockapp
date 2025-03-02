@@ -5,6 +5,7 @@ import StockPrice from './components/stockPrice';
 import SearchDropdown from './components/search';
 import Login from './components/login';
 import SignUp from './components/signUp';
+import Dashboard from './components/Dashboard';
 
 const App = () => {
   return(
@@ -52,8 +53,11 @@ const App = () => {
           {/* Login Route */}
           <Route path="/login" element={<Login />} />
 
-          {/* SignUP Route */}
+          {/* SignUp Route */}
           <Route path="/sign-up" element={<SignUp />} />
+
+          {/* dashboard Route */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>
