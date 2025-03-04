@@ -106,8 +106,8 @@ async def get_userInfo(user_id:int, db:db_dependency):
     watchlists_data = []
 
     for w in watchlists:
-        items = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.watchlist_id == w.id).all()
-        asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, watchlist_id=w.id) for item in items]
+        items = db.query(models.Watchlist_Item , models.Asset).join(models.Asset, models.Watchlist_Item.asset_id == models.Asset.id).filter(models.Watchlist_Item.watchlist_id == w.id).all()
+        asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, watchlist_id=w.id, asset_symbol=asset.symbol, asset_name=asset.name) for item, asset in items]
         watchlists_data.append(schema.watchlistResponse(name=w.name, user_id=user_id, assets=asset_items))
     
     return schema.userInfo(username= user.username, watchlists=watchlists_data)

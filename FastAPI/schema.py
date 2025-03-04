@@ -60,6 +60,8 @@ class watchlistmodel(watchlistBase):
 class watchlistItemBase(BaseModel):
     watchlist_id : int
     asset_id:int
+    asset_symbol:str
+    asset_name:str
 
 class watchlistItemModel(watchlistItemBase):
     id: int
