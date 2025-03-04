@@ -112,6 +112,21 @@ async def get_userInfo(user_id:int, db:db_dependency):
     
     return schema.userInfo(username= user.username, watchlists=watchlists_data)
 
+# get all assets in the watchlist
+@app.get("/watchlist/{watchlist_id}", response_model=List[schema.watchlistItemModel])
+async def get_watchlistItems(watchlist_id:int, db:db_dependency):
+    try:
+        items = db.query(models.Watchlist_Item).filter(models.Watchlist_Item.watchlist_id == watchlist_id).all()
+    except:
+        raise HTTPException(status_code=404, detail="watchlist not found")
+    
+    assetList = []
+    for i in items:
+        asset = db.query(models.Asset).filter(models.Asset.id == i.asset_id).first()
+        assetList.append(schema.watchlistItemModel(id=i.id,asset_id=asset.id, asset_symbol=asset.symbol, asset_name=asset.name, watchlist_id=watchlist_id))
+
+    return assetList
+
 # put an asset into a users watchlist
 @app.put("/user/{user_id}/{watchlist_id}", response_model=schema.watchlistResponse)
 async def put_asset(user_id: int, watchlist_id :int, asset_id:int, db:db_dependency):
