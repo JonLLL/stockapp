@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from '../api';  
+import WatchlistModal from "./WatchlistModal";
 
 function Dashboard() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [watchlist,setWatchlist] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         // Check if user is logged in
@@ -25,11 +27,6 @@ function Dashboard() {
             console.log("Fetching watchlist for user:", userId);
             const response = await api.get(`/user/${userId}`);
             console.log("Watchlist response:", response.data.watchlists);
-
-            response.data.watchlists.forEach((list, index) => {
-                console.log(`Watchlist ${index}:`, list);
-                console.log("Assets:", list.assets);
-            });
 
             setWatchlist(response.data.watchlists || []);
         } catch (error) {
@@ -51,17 +48,29 @@ function Dashboard() {
         navigate("/login"); // Redirect to login
     };
 
+    const handleAddWatchlist = async (name) => {
+        try {
+          const response = await api.post(`/user/${user.id}/watchlist`, { name });
+          setWatchlist([...watchlist, response.data]); // Append new watchlist
+          console.log(watchlist)
+        } catch (error) {
+          console.error("Error adding watchlist", error);
+        }
+      };
+
     return (
         <div>
             <h2>Welcome back, {user?.username}!</h2>
             <button onClick={handleLogout}>Logout</button>
             <h4>Your Watchlists:</h4>
+            <button onClick={() =>setIsModalOpen(true) }>+</button> 
             {watchlist.length > 0 ? (
                 watchlist.map((list) => (
                     <div key={list.id} style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }}>
+                        {/* include link to asset page as well */}
                         <h4>{list.name}</h4>
                         <ul>
-                            {list.assets.length > 0 ? (
+                            {list.assets ? (
                                 list.assets.map((asset) => (
                                     <li key={asset.asset_id}>
                                         <Link to={`/assets/${asset.asset_id}`}>
@@ -78,6 +87,11 @@ function Dashboard() {
             ) : (
                 <p>You have no watchlists yet.</p>
             )}
+            <WatchlistModal 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)} 
+                onAddWatchlist={handleAddWatchlist} 
+            />
         </div>
     );
 }
