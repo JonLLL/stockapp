@@ -66,9 +66,13 @@ function Dashboard() {
             <button onClick={() =>setIsModalOpen(true) }>+</button> 
             {watchlist.length > 0 ? (
                 watchlist.map((list) => (
-                    <div key={list.id} style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }}>
+                    <div key={list.watchlist_id} style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }} >
                         {/* include link to asset page as well */}
-                        <h4>{list.name}</h4>
+                            <h4 key = {list.watchlist_id} >
+                                <Link to={`/watchlist/${list.watchlist_id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    {list.name}
+                                </Link>
+                            </h4>
                         <ul>
                             {list.assets ? (
                                 list.assets.map((asset) => (

@@ -58,7 +58,6 @@ class watchlistmodel(watchlistBase):
         from_attributes = True
 
 class watchlistItemBase(BaseModel):
-    watchlist_id : int
     asset_id:int
     asset_symbol:str
     asset_name:str
@@ -79,6 +78,7 @@ class LoginRequest(BaseModel):
 class watchlistResponse(BaseModel):
     name: str
     user_id: int
+    watchlist_id : int
     assets: list[watchlistItemBase]
 
 class userInfo(BaseModel):

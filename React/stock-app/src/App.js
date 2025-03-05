@@ -6,6 +6,7 @@ import SearchDropdown from './components/search';
 import Login from './components/login';
 import SignUp from './components/signUp';
 import Dashboard from './components/Dashboard';
+import Watchlist from './components/watchList';
 
 const App = () => {
   return(
@@ -58,6 +59,8 @@ const App = () => {
 
           {/* dashboard Route */}
           <Route path="/dashboard" element={<Dashboard />} />
+
+          <Route path='/watchlist/:watchlistId' element={<Watchlist/>}/>
         </Routes>
       </div>
     </Router>
