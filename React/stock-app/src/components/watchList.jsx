@@ -8,11 +8,11 @@ function Watchlist() {
     const watchlistId = useParams();
     const [assets, setAssets] = useState([]);
     const [watchlistName, setWatchlistName] = useState("");
+    const storedUser =  JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchAssets = async () => {
       try {
-        const storedUser =  JSON.parse(localStorage.getItem("user"));
         const response = await api.get(`/watchlist/${watchlistId.watchlistId}`,{
                 params: {
                     watchlist_id : watchlistId.watchlistId,
@@ -22,14 +22,13 @@ function Watchlist() {
         );
         setAssets(response.data.assets);
         setWatchlistName(response.data.name)
-        console.log(assets)
       } catch (error) {
         console.error('Error fetching assets:', error);
       }
     };
 
     fetchAssets();
-  }, [watchlistId]);
+  }, [watchlistId, storedUser.user.id]);
 
  
   return (
@@ -37,7 +36,7 @@ function Watchlist() {
       <h2>{watchlistName}</h2>
       <ul>
         {assets.map((asset) => (
-          <li key={asset.id}>
+          <li key={asset.asset_id}>
             <Link to={`/assets/${asset.asset_id}`}>
               {asset.asset_symbol} - {asset.asset_name}
             </Link>
