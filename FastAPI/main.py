@@ -46,6 +46,14 @@ async def get_stockPrices(stock_id: int, db : db_dependency):
             exchange=stock.exchange,
             prices=stock_prices
         )
+
+@app.get("/asset/{symbol}", response_model= schema.assetModel)
+async def get_asset_symbol(symbol: str, db:db_dependency):
+    asset = db.query(models.Asset).filter(models.Asset.symbol == symbol).first()
+    if not asset:
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return asset
+
 # create user upon sign up
 @app.post("/sign-up")
 async def create_user(request :schema.SignUpRequest, db:db_dependency):
@@ -200,7 +208,7 @@ async def delete_watchlist(user_id: int, watchlist_id:int, db:db_dependency):
     for w in watchlists:
         items = db.query(models.Watchlist_Item , models.Asset).join(models.Asset, models.Watchlist_Item.asset_id == models.Asset.id).filter(models.Watchlist_Item.watchlist_id == w.id).all()
         asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name) for item, asset in items]
-        watchlists_data.append(schema.watchlistResponse(name=w.name, user_id=user_id, watchlist_id=w.id, assets=asset_items))
+        watchlists_data.append(schema.watchlistResponse(name=w.name, user_id=user_id, watchlist_id=w.id,assets=asset_items))
     
     return schema.userInfo(username=user.username, watchlists=watchlists_data)
 
