@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import api from '../api';  
-import AssetModal from "./addAssetModal";
+import AssetModal from "../components/addAssetModal";
 
 function Watchlist() { 
     const watchlistId = useParams();

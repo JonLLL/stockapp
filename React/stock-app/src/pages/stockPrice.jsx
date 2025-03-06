@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../api';  
-import TradingViewWidget from './TradingViewWidget';
+import TradingViewWidget from '../components/TradingViewWidget';
 
 function StockPrice(){
     const { assetId } = useParams();

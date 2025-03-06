@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import AssetList from './pages/assetList';
-import StockPrice from './components/stockPrice';
+import StockPrice from './pages/stockPrice';
 import SearchDropdown from './components/search';
 import Login from './pages/login';
 import SignUp from './pages/signUp';
 import Dashboard from './pages/Dashboard';
-import Watchlist from './components/watchList';
+import Watchlist from './pages/watchList';
 
 const App = () => {
   return(
