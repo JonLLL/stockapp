@@ -34,7 +34,7 @@ function Watchlist() {
     const handleAddAsset = async (asset_id) => {
         try {
             const response = await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}?asset_id=${asset_id}`);
-            setAssets([...assets, response.data])
+            setAssets(response.data.assets)
         } catch (error) {
             console.error("Error adding asset", error);
         }
@@ -47,13 +47,15 @@ function Watchlist() {
             <button onClick={() =>setIsAddModalOpen(true) }>+</button>
             <button>edit</button>
         </div>
+        <ul>
         {assets.map((asset) => (
-          <li key={asset.asset_id}>
+            <li key={asset.asset_id}>
             <Link to={`/assets/${asset.asset_id}`}>
-              {asset.asset_symbol} - {asset.asset_name}
+                {asset.asset_symbol} - {asset.asset_name}
             </Link>
-          </li>
+            </li>
         ))}
+        </ul>
         <AssetModal
             isOpen={isAddModalOpen} 
             onClose={() => setIsAddModalOpen(false)} 

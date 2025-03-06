@@ -74,7 +74,7 @@ async def create_user(request :schema.SignUpRequest, db:db_dependency):
     return {"id": new_user.id, "username": new_user.username}
 
 # create watchlist for a user
-@app.post("/user/{user_id}/watchlist", response_model=schema.watchlistCreate)
+@app.post("/user/{user_id}/watchlist", response_model=schema.watchlistResponse)
 async def create_watchlist(user_id :int , watchlist: schema.watchlistCreate, db:db_dependency):
     try:
         user = db.query(models.User).filter(models.User.id == user_id).first()
@@ -86,7 +86,7 @@ async def create_watchlist(user_id :int , watchlist: schema.watchlistCreate, db:
     db.commit()
     db.refresh(new_watchlist)
 
-    return new_watchlist
+    return schema.watchlistResponse(name=watchlist.name, watchlist_id= new_watchlist.id, user_id=user_id, assets=[])
 
 # login the user (verfies user and correct password)
 @app.post("/login")

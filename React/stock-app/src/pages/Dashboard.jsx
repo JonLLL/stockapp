@@ -53,6 +53,7 @@ function Dashboard() {
           const response = await api.post(`/user/${user.id}/watchlist`, { name });
           setWatchlist([...watchlist, response.data]); // Append new watchlist
           console.log(watchlist)
+          console.log(response.data)
         } catch (error) {
           console.error("Error adding watchlist", error);
         }
@@ -74,7 +75,7 @@ function Dashboard() {
                                 </Link>
                             </h4>
                         <ul>
-                            {list.assets ? (
+                            {list.assets.length > 0 ? (
                                 list.assets.map((asset) => (
                                     <li key={asset.asset_id}>
                                         <Link to={`/assets/${asset.asset_id}`}>
