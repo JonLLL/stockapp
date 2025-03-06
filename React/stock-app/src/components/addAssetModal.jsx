@@ -31,12 +31,15 @@ const AssetModal = ({ isOpen, onClose, onAddAsset}) =>{
               setError("Asset not found"); // Handle case when asset_id is not found
             }
           } catch (err) {
-            setError("Failed to fetch asset ID");
+            setError("Asset not found");
             console.log(err)
           }
-
-
       };
+
+    const handleCancel = () =>{
+      setError("")
+      onClose();
+    }
 
       return (
         <div style={{
@@ -66,11 +69,11 @@ const AssetModal = ({ isOpen, onClose, onAddAsset}) =>{
                 type="text"
                 placeholder="Asset Symbol"
                 value={symbol}
-                onChange={(e) => setSymbol(e.target.value)}
+                onChange={(e) => setSymbol(e.target.value.toUpperCase())}
               />
-              {error && <p>{error}</p>}
               <button type="submit">Add</button>
-              <button type="button" onClick={onClose}>Cancel</button>
+              <button type="button" onClick={handleCancel}>Cancel</button>
+              {error && <p>{error}</p>}
             </form>
           </div>
         </div>
