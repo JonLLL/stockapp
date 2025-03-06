@@ -2,13 +2,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import api from '../api';  
-
+import AssetModal from "./addAssetModal";
 
 function Watchlist() { 
     const watchlistId = useParams();
     const [assets, setAssets] = useState([]);
     const [watchlistName, setWatchlistName] = useState("");
     const storedUser =  JSON.parse(localStorage.getItem("user"));
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -30,11 +31,22 @@ function Watchlist() {
     fetchAssets();
   }, [watchlistId, storedUser.user.id]);
 
- 
+    const handleAddAsset = async (asset_id) => {
+        try {
+            const response = await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}?asset_id=${asset_id}`);
+            setAssets([...assets, response.data])
+        } catch (error) {
+            console.error("Error adding asset", error);
+        }
+    };
+
   return (
     <div>
       <h2>{watchlistName}</h2>
-      <ul>
+        <div>
+            <button onClick={() =>setIsAddModalOpen(true) }>+</button>
+            <button>edit</button>
+        </div>
         {assets.map((asset) => (
           <li key={asset.asset_id}>
             <Link to={`/assets/${asset.asset_id}`}>
@@ -42,7 +54,11 @@ function Watchlist() {
             </Link>
           </li>
         ))}
-      </ul>
+        <AssetModal
+            isOpen={isAddModalOpen} 
+            onClose={() => setIsAddModalOpen(false)} 
+            onAddAsset={handleAddAsset} 
+        />
     </div>
   );
 }

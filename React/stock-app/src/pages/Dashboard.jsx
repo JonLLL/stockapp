@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from '../api';  
-import WatchlistModal from "./WatchlistModal";
+import WatchlistModal from "../components/WatchlistModal";
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -82,7 +82,7 @@ function Dashboard() {
                                         </Link>
                                     </li>
                                 ))
-                            ) : (
+                            ) : ( 
                                 <p>No assets in this watchlist.</p>
                             )}
                         </ul>

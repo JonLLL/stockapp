@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import AssetList from './components/assetList';
+import AssetList from './pages/assetList';
 import StockPrice from './components/stockPrice';
 import SearchDropdown from './components/search';
-import Login from './components/login';
-import SignUp from './components/signUp';
-import Dashboard from './components/Dashboard';
+import Login from './pages/login';
+import SignUp from './pages/signUp';
+import Dashboard from './pages/Dashboard';
 import Watchlist from './components/watchList';
 
 const App = () => {
@@ -17,17 +17,6 @@ const App = () => {
             AssetLab
           </Link>
         </h1>
-        {/* Navigation links */}
-        <nav>
-          <ul>
-            <li>
-              <Link to="/assets">Asset List</Link>
-            </li>
-              <Link to="/login">
-              <button>Log In</button>
-            </Link>
-          </ul>
-        </nav>
 
         {/* Define Routes here */}
         <Routes>
@@ -39,7 +28,19 @@ const App = () => {
                 <h2>Welcome to my stock app project</h2>
                 <h3>Seamlessly manage your stocks, explore historical price data, 
                   and use detailed charts from tradeview to guide your financial journey!</h3>
+                  <h4>login to get started</h4>
+                  <Link to="/login">
+                      <button>Log In</button>
+                    </Link>
                 <h4>Discover and explore through more than 11,000 stocks and other assets. Start searching below!</h4>
+                {/* Navigation links */}
+                <nav>
+                  <ul>
+                    <li>
+                      <Link to="/assets">Asset List</Link>
+                    </li>
+                  </ul>
+                </nav>
                 <SearchDropdown />
               </div>
             }
