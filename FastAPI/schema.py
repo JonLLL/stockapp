@@ -79,7 +79,7 @@ class watchlistResponse(BaseModel):
     name: str
     user_id: int
     watchlist_id : int
-    assets: list[watchlistItemBase]
+    assets: list[watchlistItemModel]
 
 class userInfo(BaseModel):
     username : str
