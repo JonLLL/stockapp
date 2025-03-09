@@ -10,6 +10,7 @@ function Watchlist() {
     const [watchlistName, setWatchlistName] = useState("");
     const storedUser =  JSON.parse(localStorage.getItem("user"));
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
     const fetchAssets = async () => {
@@ -40,16 +41,41 @@ function Watchlist() {
         }
     };
 
+    const handleDeleteAsset = async (item_id) => {
+      console.log("deleteing item: ",item_id);
+      try{
+        const response = await api.delete(`/user/${storedUser.user.id}/${watchlistId.watchlistId}/${item_id}`,{
+            params: {
+              user_id: storedUser.user.id,
+              watchlist_id: watchlistId.watchlistId,
+              item_id: item_id
+            }
+          }
+        );
+        setAssets(response.data.assets)
+      }catch(error){
+        console.error("error deleteing item",error);
+      }
+    }
+
   return (
     <div>
       <h2>{watchlistName}</h2>
         <div>
             <button onClick={() =>setIsAddModalOpen(true) }>+</button>
-            <button>edit</button>
+            <button onClick={() => setIsEditMode(!isEditMode)}>edit</button>
         </div>
         <ul>
         {assets.map((asset) => (
-            <li key={asset.asset_id}>
+            <li key={asset.asset_id} style={{ display: 'flex', alignItems: 'center' }}>
+               {isEditMode && (
+                            <button 
+                                onClick={() => handleDeleteAsset(asset.id)} 
+                                style={{ color: 'red', marginRight: '10px' }}
+                            >
+                                X
+                            </button>
+                        )}
             <Link to={`/assets/${asset.asset_id}`}>
                 {asset.asset_symbol} - {asset.asset_name}
             </Link>

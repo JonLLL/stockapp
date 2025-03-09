@@ -45,7 +45,7 @@ function Dashboard() {
         localStorage.removeItem("user"); // Remove user data
         setUser(null);
         setWatchlist([]); // Ensure watchlist is cleared
-        navigate("/login"); // Redirect to login
+        navigate("/"); // Redirect to Home
     };
 
     const handleAddWatchlist = async (name) => {

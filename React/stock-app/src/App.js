@@ -1,23 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AssetList from './pages/assetList';
 import StockPrice from './pages/stockPrice';
-import SearchDropdown from './components/search';
 import Login from './pages/login';
 import SignUp from './pages/signUp';
 import Dashboard from './pages/Dashboard';
 import Watchlist from './pages/watchList';
 import Home from './pages/Home';
-
+import Navbar from './components/NavigationBar';
 const App = () => {
   return(
     <Router>
       <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
-        <h1>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            AssetLab
-          </Link>
-        </h1>
+        <Navbar/>
 
         {/* Define Routes here */}
         <Routes>
