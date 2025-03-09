@@ -58,24 +58,51 @@ function Watchlist() {
       }
     }
 
+    const handleUpdateWatchlistName = async () =>{
+      try{
+        const response = await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}`,{
+          name : watchlistName
+        });
+        setIsEditMode(false);
+      }catch(error){
+        console.error("error updating watchlist name", error)
+      }
+
+    }
+
   return (
     <div>
-      <h2>{watchlistName}</h2>
+      <div>
+        <h2>{isEditMode ? (<input
+                type="text"
+                value={watchlistName}
+                onChange={(e) => setWatchlistName(e.target.value)}
+              />):(
+                watchlistName
+                )}</h2>
+      </div>
         <div>
             <button onClick={() =>setIsAddModalOpen(true) }>+</button>
-            <button onClick={() => setIsEditMode(!isEditMode)}>{isEditMode? "done": "edit"}</button>
+            <button onClick={() => {
+              if(isEditMode){
+                handleUpdateWatchlistName();
+              }
+              setIsEditMode(!isEditMode)
+            }
+
+            }>{isEditMode? "done": "edit"}</button>
         </div>
         <ul>
         {assets.map((asset) => (
             <li key={asset.asset_id} style={{ display: 'flex', alignItems: 'center' }}>
-               {isEditMode && (
+               {isEditMode ? (
                             <button 
                                 onClick={() => handleDeleteAsset(asset.id)} 
                                 style={{ color: 'red', marginRight: '10px' }}
                             >
                                 X
                             </button>
-                        )}
+                        ):(null)}
             <Link to={`/assets/${asset.asset_id}`}>
                 {asset.asset_symbol} - {asset.asset_name}
             </Link>
