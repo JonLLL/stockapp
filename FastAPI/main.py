@@ -158,7 +158,7 @@ async def put_asset(user_id: int, watchlist_id :int, asset_id:int, db:db_depende
     db.refresh(new_watchlistItem)
 
     assets = db.query(models.Watchlist_Item , models.Asset).join(models.Asset, models.Watchlist_Item.asset_id == models.Asset.id).filter(models.Watchlist_Item.watchlist_id == watchlist_id).all()
-    asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name, id = item.id) for item, asset in assets]
+    asset_items = [schema.watchlistItemModel(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name, id = item.id) for item, asset in assets]
 
     return schema.watchlistResponse(name = watchlist.name, user_id=user_id, watchlist_id=watchlist_id, assets=asset_items)
 
@@ -181,7 +181,7 @@ async def delete_asset(user_id:int, watchlist_id:int, item_id:int, db:db_depende
     db.commit()
     
     assets = db.query(models.Watchlist_Item , models.Asset).join(models.Asset, models.Watchlist_Item.asset_id == models.Asset.id).filter(models.Watchlist_Item.watchlist_id == watchlist_id).all()
-    asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name, id = item.id) for item, asset in assets]
+    asset_items = [schema.watchlistItemModel(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name, id = item.id) for item, asset in assets]
 
     return schema.watchlistResponse(name=watchlist.name, user_id=user_id, watchlist_id=watchlist_id, assets= asset_items)
 
@@ -207,7 +207,7 @@ async def delete_watchlist(user_id: int, watchlist_id:int, db:db_dependency):
 
     for w in watchlists:
         items = db.query(models.Watchlist_Item , models.Asset).join(models.Asset, models.Watchlist_Item.asset_id == models.Asset.id).filter(models.Watchlist_Item.watchlist_id == w.id).all()
-        asset_items = [schema.watchlistItemBase(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name, id=item.id) for item, asset in items]
+        asset_items = [schema.watchlistItemModel(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name, id=item.id) for item, asset in items]
         watchlists_data.append(schema.watchlistResponse(name=w.name, user_id=user_id, watchlist_id=w.id,assets=asset_items))
     
     return schema.userInfo(username=user.username, watchlists=watchlists_data)
