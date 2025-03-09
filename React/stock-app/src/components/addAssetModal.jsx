@@ -37,6 +37,7 @@ const AssetModal = ({ isOpen, onClose, onAddAsset}) =>{
 
     const handleCancel = () =>{
       setError("")
+      setSymbol("")
       onClose();
     }
 
