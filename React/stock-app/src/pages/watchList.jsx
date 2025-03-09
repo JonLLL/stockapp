@@ -63,7 +63,7 @@ function Watchlist() {
       <h2>{watchlistName}</h2>
         <div>
             <button onClick={() =>setIsAddModalOpen(true) }>+</button>
-            <button onClick={() => setIsEditMode(!isEditMode)}>edit</button>
+            <button onClick={() => setIsEditMode(!isEditMode)}>{isEditMode? "done": "edit"}</button>
         </div>
         <ul>
         {assets.map((asset) => (
