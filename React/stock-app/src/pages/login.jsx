@@ -20,6 +20,7 @@ function Login(){
             });
 
             localStorage.setItem("user", JSON.stringify(response.data));
+            window.dispatchEvent(new Event("storage"));
 
             setMessage("Login successful!")
             console.log("Login Successful", response.data)
