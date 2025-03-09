@@ -34,7 +34,7 @@ function Watchlist() {
 
     const handleAddAsset = async (asset_id) => {
         try {
-            const response = await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}?asset_id=${asset_id}`);
+            const response = await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}/${asset_id}`);
             setAssets(response.data.assets)
         } catch (error) {
             console.error("Error adding asset", error);

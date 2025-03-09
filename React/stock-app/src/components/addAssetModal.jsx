@@ -3,7 +3,6 @@ import api from '../api';
 
 const fetchAssetId = async (symbol) => {
     const response = await api.get(`/asset/${symbol}`);
-    // const data = await JSON.parse(response.data);
     return response.data.id; 
   };
 
