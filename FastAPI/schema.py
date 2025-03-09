@@ -51,7 +51,7 @@ class watchlistBase(BaseModel):
     user_id: int
 
 
-class watchlistmodel(watchlistBase):
+class watchlistModel(watchlistBase):
     id: int
 
     class Config:
@@ -89,3 +89,6 @@ class SignUpRequest(BaseModel):
     username: str
     password: str
     email:str
+
+class updateWatchlist(BaseModel):
+    name: str

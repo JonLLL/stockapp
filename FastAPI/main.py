@@ -137,7 +137,7 @@ async def get_watchlistItems(user_id: int,watchlist_id:int, db:db_dependency):
     return schema.watchlistResponse(name= watchlist.name, user_id=user_id, watchlist_id=watchlist_id, assets=asset_items)
 
 # put an asset into a users watchlist
-@app.put("/user/{user_id}/{watchlist_id}", response_model=schema.watchlistResponse)
+@app.put("/user/{user_id}/{watchlist_id}/{asset_id}", response_model=schema.watchlistResponse)
 async def put_asset(user_id: int, watchlist_id :int, asset_id:int, db:db_dependency):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if not user:
@@ -161,6 +161,25 @@ async def put_asset(user_id: int, watchlist_id :int, asset_id:int, db:db_depende
     asset_items = [schema.watchlistItemModel(asset_id= item.asset_id, asset_symbol=asset.symbol, asset_name=asset.name, id = item.id) for item, asset in assets]
 
     return schema.watchlistResponse(name = watchlist.name, user_id=user_id, watchlist_id=watchlist_id, assets=asset_items)
+
+
+@app.put("/user/{user_id}/{watchlist_id}", response_model=schema.watchlistModel)
+async def update_listName(user_id:int, watchlist_id:int, request:schema.updateWatchlist, db:db_dependency):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    watchlist = db.query(models.Watchlist).filter(models.Watchlist.user_id == user_id, models.Watchlist.id == watchlist_id).first()
+    if not watchlist:
+        raise HTTPException(status_code=404, detail="Watchlist for this user not found")
+    
+    watchlist.name = request.name
+    db.commit()
+
+    return schema.watchlistModel(id=watchlist.id, name=watchlist.name, user_id=watchlist.user_id)
+    
+
+
 
 # delete an item from a users watchlist 
 @app.delete("/user/{user_id}/{watchlist_id}/{watchlistItem_id}", response_model=schema.watchlistResponse)
