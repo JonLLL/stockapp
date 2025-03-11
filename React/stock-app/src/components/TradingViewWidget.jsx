@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, memo } from 'react';
 
 function TradingViewWidget({symbol, exchange}) {
-  const container = useRef();
+  const container = useRef(null);
 
   useEffect(
     () => {
@@ -17,7 +17,7 @@ function TradingViewWidget({symbol, exchange}) {
           "symbol": "${exchange}:${symbol}",
           "interval": "D",
           "timezone": "America/New_York",
-          "theme": "light",
+          "theme": "dark",
           "style": "1",
           "locale": "en",
           "hide_top_toolbar": true,

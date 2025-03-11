@@ -60,7 +60,7 @@ function Watchlist() {
 
     const handleUpdateWatchlistName = async () =>{
       try{
-        const response = await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}`,{
+        await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}`,{
           name : watchlistName
         });
         setIsEditMode(false);
