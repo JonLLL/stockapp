@@ -57,7 +57,7 @@
             <div>
                 <h2>Welcome back, {user?.username}!</h2>
                 <h4>Your Watchlists:</h4>
-                <button onClick={() =>setIsModalOpen(true) }>+</button> 
+                <button onClick={() =>setIsModalOpen(true)} className="button" >+</button> 
                 {watchlist.length > 0 ? (
                     watchlist.map((list) => (
                         <div key={list.watchlist_id} style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }} >

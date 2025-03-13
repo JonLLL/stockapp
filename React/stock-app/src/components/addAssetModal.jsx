@@ -63,7 +63,7 @@ const AssetModal = ({ isOpen, onClose, onAddAsset}) =>{
                     borderRadius: "10px",
                     boxShadow: "2px solid black",
                 }}>
-            <h3>Add an Asset</h3>
+            <h3 className = "text-black" >Add an Asset</h3>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
@@ -71,8 +71,8 @@ const AssetModal = ({ isOpen, onClose, onAddAsset}) =>{
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
               />
-              <button type="submit">Add</button>
-              <button type="button" onClick={handleCancel}>Cancel</button>
+              <button className="button"type="submit">Add</button>
+              <button className="button" type="button" onClick={handleCancel}>Cancel</button>
               {error && <p>{error}</p>}
             </form>
           </div>

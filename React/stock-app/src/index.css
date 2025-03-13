@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .button{
+    @apply relative bg-gray-800 text-purple-400 hover:bg-gray-600 rounded-xl m-1 p-1.5 border-white
+  }
+  .modal{
+    @apply text-black
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-neutral-900;
+  }
+}

@@ -35,7 +35,7 @@ function Login(){
     }
 
     return(
-        <div>
+        <div className="item-center">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -54,7 +54,7 @@ function Login(){
           onChange={handleChange}
           required
         />
-        <button type="submit">Login</button>
+        <button className = "button"  type="submit">Login</button>
         {message && <p>{message}</p>}
       </form>
       <h6>Don't have an account?<Link to="/sign-up">Sign up</Link></h6>

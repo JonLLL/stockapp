@@ -17,7 +17,7 @@ function TradingViewWidget({symbol, exchange}) {
           "symbol": "${exchange}:${symbol}",
           "interval": "D",
           "timezone": "America/New_York",
-          "theme": "light",
+          "theme": "dark",
           "style": "1",
           "locale": "en",
           "hide_top_toolbar": true,

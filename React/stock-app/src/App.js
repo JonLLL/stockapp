@@ -8,10 +8,12 @@ import Dashboard from './pages/Dashboard';
 import Watchlist from './pages/watchList';
 import Home from './pages/Home';
 import Navbar from './components/NavigationBar';
+
 const App = () => {
   return(
+    
     <Router>
-      <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+      <div className="font-sans text-white" >
         <Navbar/>
 
         {/* Define Routes here */}

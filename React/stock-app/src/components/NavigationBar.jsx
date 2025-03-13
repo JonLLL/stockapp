@@ -1,5 +1,6 @@
 import React,  { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SearchDropdown from "./search";
 
 const Navbar = () =>{
     const [localUser, setLocalUser] = useState(null);
@@ -36,23 +37,20 @@ const Navbar = () =>{
         };
     
     return(
-        <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            }}>
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' , fontSize:"35px"}}>
+        <div className="flex justify-between items-center bg-neutral-900 text-purple-700 m-0 relative" >
+            <Link to="/" className="no-underline text-inherit text-[35px] hover:text-purple-600">
                 AssetLab
             </Link> 
+            <SearchDropdown />
             <div>
                 {localUser ? (
                     <div>
-                    <button onClick={() => navigate("/dashboard")}>dashboard</button>
-                     <button onClick={handleLogout}>logout</button>
+                    <button onClick={() => navigate("/dashboard")} className="button">dashboard</button>
+                     <button onClick={handleLogout} className="button">logout</button>
                      </div>
                 ):(
-                <Link to="/login">
-                    <button>login</button>
+                <Link to="/login" className="button  hover:text-purple-400">
+                    <button >login</button>
                     </Link>
                 )}
             </div>

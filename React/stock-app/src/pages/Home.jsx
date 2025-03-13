@@ -21,10 +21,10 @@ function Home() {
                 and use detailed charts from tradeview to guide your financial journey</h3>
                 <h4>{user ? "Access your dashboard to track your assets!" : "Start tracking your assets!"}</h4>
                 {user ? (
-                    <button onClick={() => navigate("/dashboard")}>Go to Dashboard</button>
+                    <button onClick={() => navigate("/dashboard")} className="button" >Go to Dashboard</button>
                     ) : (
                     <Link to="/login">
-                        <button>Get started</button>
+                        <button className="button">Get started</button>
                     </Link>
                  )}
             <h4>Discover and explore through more than 11,000 stocks and other assets.</h4>

@@ -35,7 +35,7 @@ const WatchlistModal = ({ isOpen, onClose, onAddWatchlist }) => {
                 borderRadius: "10px",
                 boxShadow: "2px solid black",
             }}>
-        <h3>Create New Watchlist</h3>
+        <h3 className = "text-black">Create New Watchlist</h3>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -43,8 +43,8 @@ const WatchlistModal = ({ isOpen, onClose, onAddWatchlist }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button type="submit">Add</button>
-          <button type="button" onClick={onClose}>Cancel</button>
+          <button className="button" type="submit">Add</button>
+          <button  className="button"type="button" onClick={onClose}>Cancel</button>
         </form>
       </div>
     </div>

@@ -60,7 +60,7 @@ function Watchlist() {
 
     const handleUpdateWatchlistName = async () =>{
       try{
-        const response = await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}`,{
+        await api.put(`/user/${storedUser.user.id}/${watchlistId.watchlistId}`,{
           name : watchlistName
         });
         setIsEditMode(false);
@@ -82,7 +82,7 @@ function Watchlist() {
                 )}</h2>
       </div>
         <div>
-            <button onClick={() =>setIsAddModalOpen(true) }>+</button>
+            <button onClick={() =>setIsAddModalOpen(true) }className="button" >+</button>
             <button onClick={() => {
               if(isEditMode){
                 handleUpdateWatchlistName();
@@ -90,7 +90,7 @@ function Watchlist() {
               setIsEditMode(!isEditMode)
             }
 
-            }>{isEditMode? "done": "edit"}</button>
+            }className="button">{isEditMode? "done": "edit"}</button>
         </div>
         <ul>
         {assets.map((asset) => (

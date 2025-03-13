@@ -28,10 +28,10 @@ function SearchDropdown () {
         setSearchTerm(value);
 
         const filtered = assets.filter((asset)=>
-            asset.symbol.includes(value.toUpperCase())
+            asset.symbol.startsWith(value.toUpperCase())
         );
         console.log('Filtered Assets:', filtered);
-        setFilteredAssets(filtered);
+        setFilteredAssets(filtered.slice(0,5));
         setShowDropdown(filtered.length > 0 && value !== "");
         console.log(showDropdown)
         
