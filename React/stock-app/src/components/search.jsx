@@ -31,7 +31,7 @@ function SearchDropdown () {
             asset.symbol.startsWith(value.toUpperCase())
         );
         console.log('Filtered Assets:', filtered);
-        setFilteredAssets(filtered.slice(0,5));
+        setFilteredAssets(filtered.slice(0,7));
         setShowDropdown(filtered.length > 0 && value !== "");
         console.log(showDropdown)
         
