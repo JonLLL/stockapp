@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, memo } from 'react';
 
 function TradingViewWidget({symbol, exchange}) {
-  const container = useRef();
+  const container = useRef(null);
 
   useEffect(
     () => {

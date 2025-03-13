@@ -29,12 +29,11 @@ function Home() {
                  )}
             <h4>Discover and explore through more than 11,000 stocks and other assets.</h4>
             <h4>Look through our inventory or Start searching below!</h4>
-            {/* Navigation links */}
             <nav>
                 <ul>
-                <li>
-                    <Link to="/assets">Asset List</Link>
-                </li>
+                    <li>
+                        <Link to="/assets">Asset List</Link>
+                    </li>
                 </ul>
             </nav>
             <SearchDropdown />
