@@ -49,22 +49,20 @@ function SearchDropdown () {
             value={searchTerm}
             onChange={handleInputChange}
             placeholder="Search assets..."
+            className="search-input"
           />
     
           {showDropdown && (
-            <ul >
+            <ul className="search-results">
               {filteredAssets.map((asset, index) => (
                 <li key={index}>
-                    <Link to={`/assets/${asset.id}`} onClick={() => setShowDropdown(false)}>
+                    <Link to={`/assets/${asset.id}`} onClick={() => setShowDropdown(false)} className="search-item">
                         {asset.symbol} - {asset.name}
                     </Link>
                 </li>
               ))}
             </ul>
           )}
-          {/* {selectedAssetId && (
-            <StockPrice assetId={selectedAssetId} /> 
-          )} */}
         </div>
       );
 }

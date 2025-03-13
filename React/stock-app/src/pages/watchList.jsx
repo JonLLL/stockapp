@@ -77,6 +77,7 @@ function Watchlist() {
                 type="text"
                 value={watchlistName}
                 onChange={(e) => setWatchlistName(e.target.value)}
+                className = "text-black"
               />):(
                 watchlistName
                 )}</h2>

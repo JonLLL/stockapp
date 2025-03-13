@@ -28,9 +28,11 @@ function SignUp(){
         }
     }
     return(
-        <div>
-            <h2>Create Account</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="flex justify-center items-center min-h-screen bg-neutral-900">
+    <div className="bg-neutral-800 p-8 rounded-lg shadow-lg w-full max-w-md text-white">
+        <h2 className="text-2xl font-semibold text-purple-500 text-center">Create Account</h2>
+
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <input
                 type="text"
                 name="username"
@@ -38,14 +40,16 @@ function SignUp(){
                 value={userData.username}
                 onChange={handleChange}
                 required
+                className="w-full px-4 py-2 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <input
                 type="text"
                 name="email"
-                placeholder="email"
+                placeholder="Email"
                 value={userData.email}
                 onChange={handleChange}
                 required
+                className="w-full px-4 py-2 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <input
                 type="password"
@@ -54,12 +58,27 @@ function SignUp(){
                 value={userData.password}
                 onChange={handleChange}
                 required
+                className="w-full px-4 py-2 rounded bg-neutral-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
-            <button type="submit">Sign-up</button>
-            {message && <p>{message}</p>}
-            <h6>Already have an account?<Link to="/login">Log in</Link></h6>
-            </form>
-        </div>
+            <button 
+                type="submit" 
+                className="w-full bg-purple-600 hover:bg-purple-500 transition text-white font-semibold py-2 rounded"
+            >
+                Sign Up
+            </button>
+        </form>
+
+        {message && <p className="text-center text-red-500 mt-2">{message}</p>}
+
+        <h6 className="text-center text-gray-400 mt-4">
+            Already have an account? 
+            <Link to="/login" className="text-purple-400 hover:underline ml-1">
+                Log in
+            </Link>
+        </h6>
+    </div>
+</div>
+
     )   
 }
 export default SignUp

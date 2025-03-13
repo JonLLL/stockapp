@@ -36,7 +36,7 @@ const WatchlistModal = ({ isOpen, onClose, onAddWatchlist }) => {
                 boxShadow: "2px solid black",
             }}>
         <h3 className = "text-black">Create New Watchlist</h3>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}className = "text-black">
           <input
             type="text"
             placeholder="Watchlist Name"

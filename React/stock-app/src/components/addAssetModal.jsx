@@ -64,7 +64,7 @@ const AssetModal = ({ isOpen, onClose, onAddAsset}) =>{
                     boxShadow: "2px solid black",
                 }}>
             <h3 className = "text-black" >Add an Asset</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}className = "text-black">
               <input
                 type="text"
                 placeholder="Asset Symbol"

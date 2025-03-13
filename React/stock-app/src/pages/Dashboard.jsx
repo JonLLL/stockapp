@@ -54,43 +54,52 @@
         };
 
         return (
-            <div>
-                <h2>Welcome back, {user?.username}!</h2>
-                <h4>Your Watchlists:</h4>
-                <button onClick={() =>setIsModalOpen(true)} className="button" >+</button> 
-                {watchlist.length > 0 ? (
-                    watchlist.map((list) => (
-                        <div key={list.watchlist_id} style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px' }} >
-                            {/* include link to asset page as well */}
-                                <h4 key = {list.watchlist_id} >
-                                    <Link to={`/watchlist/${list.watchlist_id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                        {list.name}
-                                    </Link>
-                                </h4>
-                            <ul>
+            <div className="p-6 max-w-3xl mx-auto">
+            <h2 className="text-2xl font-semibold text-purple-600">Welcome back, {user?.username}!</h2>
+            
+            <div className="flex items-center justify-between mt-4">
+                <h4 className="text-lg font-medium">Your Watchlists:</h4>
+                <button onClick={() => setIsModalOpen(true)} className="bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-500 transition">
+                    +
+                </button> 
+            </div>
+        
+            {watchlist.length > 0 ? (
+                <div className="mt-4 space-y-4">
+                    {watchlist.map((list) => (
+                        <div key={list.watchlist_id} className="border border-gray-300 p-4 rounded-lg bg-neutral-900 text-purple-400 shadow-md">
+                            <h4 className="text-lg font-semibold">
+                                <Link to={`/watchlist/${list.watchlist_id}`} className="hover:text-purple-500 transition">
+                                    {list.name}
+                                </Link>
+                            </h4>
+                            <ul className="mt-2 space-y-1">
                                 {list.assets.length > 0 ? (
                                     list.assets.map((asset) => (
                                         <li key={asset.asset_id}>
-                                            <Link to={`/assets/${asset.asset_id}`}>
+                                            <Link to={`/assets/${asset.asset_id}`} className="hover:text-purple-500 transition">
                                                 {asset.asset_symbol} - {asset.asset_name}
                                             </Link>
                                         </li>
                                     ))
                                 ) : ( 
-                                    <p>No assets in this watchlist.</p>
+                                    <p className="text-gray-400">No assets in this watchlist.</p>
                                 )}
                             </ul>
                         </div>
-                    ))
-                ) : (
-                    <p>You have no watchlists yet.</p>
-                )}
-                <WatchlistModal 
-                    isOpen={isModalOpen} 
-                    onClose={() => setIsModalOpen(false)} 
-                    onAddWatchlist={handleAddWatchlist} 
-                />
-            </div>
+                    ))}
+                </div>
+            ) : (
+                <p className="text-gray-400 mt-4">You have no watchlists yet.</p>
+            )}
+        
+            <WatchlistModal 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)} 
+                onAddWatchlist={handleAddWatchlist} 
+            />
+        </div>
+        
         );
     }
 
